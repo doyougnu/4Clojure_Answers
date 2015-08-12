@@ -4,6 +4,6 @@
 ;;
 ;; Use M-x 4clojure-check-answers when you're done!
 
-(= 20 ((hash-map :a 10, :b 20, :c 30) :b))
+(= 2 ((hash-map :a 10, :b 20, :c 30) :b))
 
 (= 20 (:b {:a 10, :b 20, :c 30}))
