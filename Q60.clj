@@ -9,10 +9,12 @@
 (defn myReduce
   ([func coll] (myReduce func (first coll) (rest coll)))
   ([func acc coll]
-   (println acc)
-   (if (seq coll)
-     (recur func (func acc (first coll)) (rest coll))
-     (lazy-seq acc))))
+   (let [m (fn m [fu ac col]
+             (println acc)
+             (if (seq col)
+               (recur fu (fu ac (first col)) (rest col))
+               ac))]
+     (lazy-seq (m func acc coll)))))
 
 (= (take 5 (myReduce + (range))) [0 1 3 6 10])
 
