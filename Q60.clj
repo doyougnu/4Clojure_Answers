@@ -7,14 +7,13 @@
 ;; Use M-x 4clojure-check-answers when you're done!
 
 (defn myReduce
-  ([func coll] (myReduce func (list (first coll)) (rest coll)))
+  ([func coll] (myReduce func (first coll) (rest coll)))
   ([func acc coll]
-   (let [myRed (fn [fu ac col]
-                 (println ac)
-                 (if (seq col)
-                   (recur fu (cons (fu (first ac) (first col)) ac ) (rest col))
-                   ac))]
-     (lazy-seq (myRed func acc coll)))))
+   (println acc)
+   (lazy-seq
+    (if (seq coll)
+      (cons acc (myReduce func (func acc (first coll)) (rest coll)))
+      [acc]))))
 
 (= (take 5 (myReduce + (range))) [0 1 3 6 10])
 
