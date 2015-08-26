@@ -10,7 +10,7 @@
         thirds (map last board)
         firstcross (concat (first firsts) (second seconds) (last thirds))
         secondcross (concat (last firsts) (second seconds) (first thirds))]
-    (fn test [j k]
+    (defn test [j k]
       (reduce #(and %1 %2) (map #(= j %) k)))
     (cond
      (test :o firsts) :o
