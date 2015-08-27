@@ -8,27 +8,27 @@
         firsts (map first board)
         seconds (map second board)
         thirds (map last board)
-        firstcross (concat (first firsts) (second seconds) (last thirds))
-        secondcross (concat (last firsts) (second seconds) (first thirds))]
+        firstcross (concat [(first firsts)] [(second seconds)] [(last thirds)])
+        secondcross (concat [(last firsts)] [(second seconds)] [(first thirds)])]
     (defn test [j k]
       (reduce #(and %1 %2) (map #(= j %) k)))
     (cond
-     (test :o firsts) :o
-     (test :x firsts) :x
-     (test :o seconds) :o
-     (test :x seconds) :x
-     (test :o thirds) :o
-     (test :x thirds) :x
-     (test :o a) :o
-     (test :x a) :x
-     (test :o b) :o
-     (test :x b) :x
-     (test :o c) :o
-     (test :x c) :x
-     (test :o firstcross) :o
-     (test :x firstcross) :x
-     (test :o secondcross) :o
-     (test :x secondcross) :x
+     (test :o firsts) ":o"
+     (test :x firsts) ":x"
+     (test :o seconds) ":o"
+     (test :x seconds) ":x"
+     (test :o thirds) ":o"
+     (test :x thirds) ":x"
+     (test :o a) ":o"
+     (test :x a) ":x"
+     (test :o b) ":o"
+     (test :x b) ":x"
+     (test :o c) ":o"
+     (test :x c) ":x"
+     (test :o firstcross) ":o"
+     (test :x firstcross) ":x"
+     (test :o secondcross) ":y"
+     (test :x secondcross) ":x"
      :else nil)))
 
 (= nil (tttCheck [[:e :e :e]
