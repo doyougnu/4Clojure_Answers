@@ -4,14 +4,13 @@
 ;;
 ;; Use M-x 4clojure-check-answers when you're done!
 
-(defn factors [x]
-  (filter #(zero? (mod x %)) (range 1 (+ 1 x))))
-
-(defn isPrime? [n]
-  (= 2 (count (factors n))))
-
-(defn primeFactors [n] ;;need to fix primeFaactors to fully factor all factors
-  (filter isPrime? (map factors (factors n))))
+(defn primeFactors
+  ([n] (prime-factors n 2))
+  ([n candidate]
+     (cond (<= n 1) ()
+           (zero? (rem n candidate)) (cons candidate (lazy-seq (prime-factors (/ n candidate)
+                                                                              candidate)))
+           :else (recur n (inc candidate)))))
 
 (defn inList? [a coll]
   (some #(= a %) coll))
@@ -25,7 +24,19 @@
 (defn gcd [x y]
   (let [xpf (primeFactors x)
         ypf (primeFactors y)]
-    (reduce * (common-elemen  ts xpf ypf))))
+    (reduce * (common-elements xpf ypf))))
+
+(defn gcd2 [n m];;why do list manipulation that isn't well supported when good old euclid will do
+  (let [quotient (quot n m)
+        remain (mod n m)]
+    (cond
+     (= 0 remain) m
+     :else (recur m remain))))
+
+(defn totient [n]
+  (for [x (range 1 n)
+        :while (= 1 (gcd2 x n))]
+    x))
 
 (= (__ 1) 1)
 
