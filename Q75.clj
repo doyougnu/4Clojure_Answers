@@ -10,19 +10,22 @@
 (defn isPrime? [n]
   (= 2 (count (factors n))))
 
-(defn primeFactors [n]
-  (filter isPrime? (factors n)))
+(defn primeFactors [n] ;;need to fix primeFaactors to fully factor all factors
+  (filter isPrime? (map factors (factors n))))
 
+(defn inList? [a coll]
+  (some #(= a %) coll))
 
-(defn common-elements [& colls];;need to fix this fucntion to allow duplicates from each list. I'm thinking get frequencies, add the frequency then multiply the value by summed freq
-  (let [freqs (map frequencies colls)]
-    (mapcat (fn [e] (repeat (apply min (map #(% e) freqs)) e))
-            (apply clojure.set/intersection (map (comp set keys) freqs)))))
+(defn common-elements [x y]
+  (let [m (flatten (merge x y))
+        n (group-by identity m)
+        o (filter #(not= 1 (count (last %))) n)]
+    (rest (flatten o))))
 
 (defn gcd [x y]
   (let [xpf (primeFactors x)
         ypf (primeFactors y)]
-    (reduce * (common-elements xpf ypf))))
+    (reduce * (common-elemen  ts xpf ypf))))
 
 (= (__ 1) 1)
 
