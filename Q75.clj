@@ -5,10 +5,10 @@
 ;; Use M-x 4clojure-check-answers when you're done!
 
 (defn primeFactors
-  ([n] (prime-factors n 2))
+  ([n] (primeFactors n 2))
   ([n candidate]
      (cond (<= n 1) ()
-           (zero? (rem n candidate)) (cons candidate (lazy-seq (prime-factors (/ n candidate)
+           (zero? (rem n candidate)) (cons candidate (lazy-seq (primeFactors (/ n candidate)
                                                                               candidate)))
            :else (recur n (inc candidate)))))
 
@@ -33,15 +33,14 @@
      (= 0 remain) m
      :else (recur m remain))))
 
-(defn totient [n]
-  (for [x (range 1 n)
-        :while (= 1 (gcd2 x n))]
-    x))
+(defn totient [n];;once we have gcd the rest is easy
+  (let [x (range 1 (+ n 1))]
+    (count (filter #(= 1 (gcd2 n %)) x))))
 
-(= (__ 1) 1)
+(= (totient 1) 1)
 
-(= (__ 10) (count '(1 3 7 9)) 4)
+(= (totient 10) (count '(1 3 7 9)) 4)
 
-(= (__ 40) 16)
+(= (totient 40) 16)
 
-(= (__ 99) 60)
+(= (totient 99) 60)
