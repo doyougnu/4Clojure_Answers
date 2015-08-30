@@ -11,7 +11,13 @@
   (apply str ca))
 
 (defn anagramList [word]
-  (into {} (distinct (take 100 (iterate shuffle word)))))
+  (distinct (take 100 (iterate shuffle word))))
+
+(defn anagrams [coll]
+  (let [coll (set (map #(set toCharArray %) coll))
+        collset (into #{} coll)
+        anagramset (into #{} (map #(anagramList %) coll))]
+    (print collset)))
 
 (= (__ ["meat" "mat" "team" "mate" "eat"])
    #{#{"meat" "team" "mate"}})
