@@ -28,7 +28,7 @@
 (defn anagrams [coll]
   (let [colls (mapv toCharArray coll)
         anagrams (mapv #(anagramList %) colls)]
-   (pprint anagrams)))
+   (intersect-vector colls anagrams)))
 
 ;;;after much struggling with trying to generate an anagram list, then functionally match the anagrams, yyhh's solution is much cheaper and elegant focusing on distribution of characters insead.
 
