@@ -10,7 +10,12 @@
                  [minindex (+ minindex 1)])) vect))
 
 (defn adjacentValues [vect adjvect]
-  (map (fn [vect] (map (fn [[a b]] [(nth vect a) (nth vect b)]) adjvect))))
+  (let [top (first vect)
+        val1 (mapv first (rest adjvect))
+        val2 (mapv last (rest adjvect))
+        valvec1 (mapv #(nth (rest vect) %) val1)
+        valvec2 (mapv #(nth (rest vect) %) val2)]
+    valvec2))
 
 (defn walkTri [vect])
 
