@@ -8,14 +8,21 @@
   (let [x (range 1 n)
         factors (filter #(zero? (mod n %)) x)
         factsum (reduce + factors)]
-    (if (= n factsum) true false)))
+    (= n factsum)))
 
-(= (perfects 6) true)
+(defn perfect2 [n];;noticed this could be done more cleanly
+  (->> n
+   (range 1)
+   (filter #(zero? (mod n %)))
+   (reduce +)
+   (= n)))
 
-(= (perfects 7) false)
+(= (perfect2 6) true)
 
-(= (perfects 496) true)
+(= (perfect2 7) false)
 
-(= (perfects 500) false)
+(= (perfect2 496) true)
 
-(= (perfects 8128) true)
+(= (perfect2 500) false)
+
+(= (perfect2 8128) true)
