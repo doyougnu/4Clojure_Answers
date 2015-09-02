@@ -4,27 +4,26 @@
 ;;
 ;; Use M-x 4clojure-check-answers when you're done!
 
-(defn adjacents [vect]
-  (mapv (fn [v] (let [minelem (apply min v)
-                     minindex (.indexOf v minelem)]
-                 [minindex (+ minindex 1)])) vect))
+(defn branch [s];;the key was enumerating all possible branches, once that is solved the rest was
+  (let [i (last s)];;easy, I took this function from John Madisons youtube video on this problem
+    [(conj s i) (conj s (inc i))]));; then solved the rest myself
 
-(defn adjacentValues [vect adjvect]
-  (let [top (first vect)
-        val1 (mapv first (rest adjvect))
-        val2 (mapv last (rest adjvect))
-        valvec1 (mapv #(nth (rest vect) %) val1)
-        valvec2 (mapv #(nth (rest vect) %) val2)]
-    valvec2))
+(defn enumBranches [n]
+  (last (take n (iterate #(mapcat branch %) [[0]]))))
 
-(defn walkTri [vect])
+(defn branchValues [triangle]
+  (let [i (count triangle)]
+    (map  #(map (fn [tri-level index] (nth tri-level index)) triangle %) (enumBranches i))))
 
-(= 7 (__ '([1]
+(defn findMinPath [triangle]
+  (apply min (map #(reduce + %) (branchValues triangle))))
+
+(= 7 (findMinPath '([1]
           [2 4]
          [5 1 4]
         [2 3 4 5]))) ; 1->2->1->3
 
-(= 20 (__ '([3]
+(= 20 (findMinPath '([3]
            [2 4]
           [1 9 3]
          [9 9 2 4]
