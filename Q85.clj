@@ -6,15 +6,15 @@
 
 (defn genPower [coll]
   (reduce
-   (fn [acc x] (set (concat (map #(conj % x) acc) acc)))
+   (fn [acc x] (set (concat (map #(conj % x) acc) acc)));;take pred, map over accumulator, conj acc and next element, return both original accumulator, and conj'd acc, then rinse and repeat to enumerate
    #{#{}}
    coll))
 
-(= (__ #{1 :a}) #{#{1 :a} #{:a} #{} #{1}})
+(= (genPower #{1 :a}) #{#{1 :a} #{:a} #{} #{1}})
 
-(= (__ #{}) #{#{}})
+(= (genPower #{}) #{#{}})
 
-(= (__ #{1 2 3})
+(= (genPower #{1 2 3})
    #{#{} #{1} #{2} #{3} #{1 2} #{1 3} #{2 3} #{1 2 3}})
 
-(= (count (__ (into #{} (range 10)))) 1024)
+(= (count (genPower (into #{} (range 10)))) 1024)
